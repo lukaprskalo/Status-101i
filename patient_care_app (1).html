@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patientenversorgung - Dokumentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .category {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 1px solid #e1e8ed;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .category:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .category-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .option-group {
+            margin-bottom: 15px;
+        }
+
+        .option-label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #34495e;
+            display: block;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 8px;
+            transform: scale(1.2);
+        }
+
+        .scale-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 5px;
+        }
+
+        .scale-input input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        .scale-input input[type="number"]:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .text-input {
+            width: 100%;
+            padding: 8px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin-top: 5px;
+            font-size: 0.9rem;
+        }
+
+        .text-input:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+
+        .inline-input {
+            width: 80px;
+            padding: 4px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            margin-left: 5px;
+            font-size: 0.9rem;
+        }
+
+        .nested-options {
+            margin-left: 20px;
+            margin-top: 8px;
+            padding-left: 10px;
+            border-left: 2px solid #e9ecef;
+        }
+
+        .output-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border: 1px solid #e1e8ed;
+        }
+
+        .output-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .output-text {
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 150px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Patientenversorgung</h1>
+            <p class="subtitle">Digitale Dokumentationshilfe</p>
+        </header>
+
+        <div class="categories">
+            <!-- ZNS Kategorie -->
+            <div class="category">
+                <div class="category-title">1. ZNS</div>
+                
+                <div class="option-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="wach" data-category="zns" data-value="wach">
+                            <label for="wach">Wach</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sediert" data-category="zns" data-value="sediert">
+                            <label for="sediert">Sediert</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group" id="wach-options" style="display: none;">
+                    <div class="nested-options">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="adäquat" data-category="zns" data-value="adäquat">
+                            <label for="adäquat">Adäquat</label>
+                        </div>
+                        <div>
+                            <label>Oder Freitext:</label>
+                            <input type="text" class="text-input" id="adäquat-freitext" placeholder="Beschreibung...">
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="4fach-orientiert" data-category="zns" data-value="4-fach orientiert">
+                                <label for="4fach-orientiert">4-fach orientiert</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="unscharf-orientiert" data-category="zns" data-value="unscharf orientiert">
+                                <label for="unscharf-orientiert">Unscharf orientiert</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group" id="sediert-options" style="display: none;">
+                    <span class="option-label">RASS (-5 bis +4):</span>
+                    <div class="scale-input">
+                        <input type="number" id="rass" min="-5" max="4" data-category="zns" data-label="RASS">
+                        <span>(-5 bis +4)</span>
+                    </div>
+                    
+                    <div class="nested-options">
+                        <span class="option-label">Sediert mit:</span>
+                        <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 8px;">
+                            <label><input type="checkbox" id="sufentanil" data-sedation="Sufentanil"> Sufentanil</label>
+                            <label><input type="checkbox" id="propofol" data-sedation="Propofol"> Propofol</label>
+                            <label><input type="checkbox" id="lormetazepam" data-sedation="Lormetazepam"> Lormetazepam</label>
+                            <label><input type="checkbox" id="clonidin" data-sedation="Clonidin"> Clonidin</label>
+                            <label><input type="checkbox" id="esketamin" data-sedation="Esketamin"> Esketamin</label>
+                        </div>
+                        <input type="text" class="text-input" id="sediert-text" placeholder="Weitere Medikamente (Freitext)...">
+                        
+                        <div style="margin-top: 10px;">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="befolgt-aufforderungen" data-category="zns" data-value="befolgt Aufforderungen">
+                                <label for="befolgt-aufforderungen">Befolgt Aufforderungen</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <span class="option-label">GCS (3 bis 15):</span>
+                    <div class="scale-input">
+                        <input type="number" id="gcs" min="3" max="15" data-category="zns" data-label="GCS">
+                        <span>(3 bis 15)</span>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="schmerzzufrieden" data-category="zns" data-value="schmerzzufrieden">
+                        <label for="schmerzzufrieden">Schmerzzufrieden</label>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <span class="option-label">PERRL:</span>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="perrl-mw" data-category="zns" data-value="PERRL mw">
+                            <label for="perrl-mw">mw</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="perrl-weit" data-category="zns" data-value="PERRL weit">
+                            <label for="perrl-weit">weit</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="perrl-eng" data-category="zns" data-value="PERRL eng">
+                            <label for="perrl-eng">eng</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="perrl-fixiert" data-category="zns" data-value="PERRL fixiert">
+                            <label for="perrl-fixiert">fixiert</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="perrl-fixiert-nicht" data-category="zns" data-value="PERRL fixiert nicht">
+                            <label for="perrl-fixiert-nicht">fixiert nicht</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="kein-anhalt-fnd" data-category="zns" data-value="kein Anhalt f. fnD">
+                            <label for="kein-anhalt-fnd">Kein Anhalt f. fnD</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bewegt-4-4" data-category="zns" data-value="bewegt 4/4">
+                            <label for="bewegt-4-4">Bewegt 4/4</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <span class="option-label">Sonstiges:</span>
+                    <input type="text" class="text-input" id="zns-sonstiges" placeholder="Weitere Bemerkungen...">
+                </div>
+            </div>
+
+            <!-- Cor/Pulmo Kategorie -->
+            <div class="category">
+                <div class="category-title">2. Cor/Pulmo</div>
+                
+                <div class="option-group">
+                    <span class="option-label">Untersuchung Herz:</span>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ht-rr" data-category="cor-pulmo" data-value="HT r+r">
+                            <label for="ht-rr">HT r+r</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="systolikum" data-category="cor-pulmo" data-value="Systolikum">
+                            <label for="systolikum">Systolikum</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="diastolikum" data-category="cor-pulmo" data-value="Diastolikum">
+                            <label for="diastolikum">Diastolikum</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="arrhythmisch-herz" data-category="cor-pulmo" data-value="arrhythmisch">
+                            <label for="arrhythmisch-herz">Arrhythmisch</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <span class="option-label">Rhythmus:</span>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="nfsr" data-category="cor-pulmo" data-value="nfSR">
+                            <label for="nfsr">nfSR</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="tcsr" data-category="cor-pulmo" data-value="tcSR">
+                            <label for="tcsr">tcSR</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bcsr" data-category="cor-pulmo" data-value="bcSR">
+                            <label for="bcsr">bcSR</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="nfvhf" data-category="cor-pulmo" data-value="nfVHF">
+                            <label for="nfvhf">nfVHF</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="tcvhf" data-category="cor-pulmo" data-value="tcVHF">
+                            <label for="tcvhf">tcVHF</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="bcvhf" data-category="cor-pulmo" data-value="bcVHF">
+                            <label for="bcvhf">bcVHF</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="sm-rhythmus" data-category="cor-pulmo" data-value="SM-Rhythmus">
+                            <label for="sm-rhythmus">SM-Rhythmus</label>
+                        </div>
+                    </div>
+                    <input type="text" class="text-input" id="rhythmus-freitext" placeholder="Andere Rhythmusstörung...">
+                </div>
+
+                <div class="option-group">
+                    <span class="option-label">RR:</span>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="rr-nt" data-category="cor-pulmo" data-value="RR nt">
+                            <label for="rr-nt">nt</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="rr-hypoton" data-category="cor-pulmo" data-value="RR hypoton">
+                            <label for="rr-hypoton">hypoton</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="rr-hyperton" data-category="cor-pulmo" data-value="RR hyperton">
+                            <label for="rr-hyperton">hyperton</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <span class="option-label">Katecholamine:</span>
+                    <div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="na" data-category="cor-pulmo" data-value="NA">
+                            <label for="na">NA</label>
+                            <input type="text" class="inline-input" id="na-rate" placeholder="Rate">
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="vp" data-category="cor-pulmo" data-value="VP">
+                            <label for="vp">VP</label>
+                            <input type="text" class="inline-input" id="vp-rate" placeholder="Rate">
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="adrenalin" data-category="cor-pulmo" data-value="Adrenalin">
+                            <label for="adrenalin">Adrenalin</label>
+                            <input type="text" class="inline-input" id="adrenalin-rate" placeholder="Rate">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div>
+                        <label>Hb:</label>
+                        <input type="text" class="inline-input" id="hb" placeholder="Wert">
+                        <label style="margin-left: 15px;">Lac:</label>
+                        <input type="text" class="inline-input" id="lac" placeholder="Wert">
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="vvecmo" data-category="cor-pulmo" data-value="vvECMO">
+                        <label for="vvecmo">vvECMO</label>
+                    </div>
+                    <div class="nested-options" id="vvecmo-details" style="display: none;">
+                        <div>
+                            <label>GF:</label>
+                            <input type="text" class="inline-input" id="gf" placeholder="l/min">
+                            <span>l/min</span>
+                            
+                            <label style="margin-left: 15px;">BF:</label>
+                            <input type="text" class="inline-input" id="bf" placeholder="l/min">
+                            <span>l/min bei</span>
+                            <input type="text" class="inline-input" id="rpm" placeholder="rpm">
+                            <span>rpm</span>
+                        </div>
+                        <div style="margin-top: 8px;">
+                            <label>Pdelta:</label>
+                            <input type="text" class="inline-input" id="pdelta" placeholder="Wert">
+                            
+                            <label style="margin-left: 15px;">SvO2:</label>
+                            <input type="text" class="inline-input" id="svo2" placeholder="%">
+                            <span>%</span>
+                        </div>
+                        <div style="margin-top: 8px;">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="farbumschlag-pos" data-ecmo="Farbumschlag pos.">
+                                <label for="farbumschlag-pos">Farbumschlag pos.</label>
+                            </div>
+                            <div>
+                                <label>Konstante Thromben bei:</label>
+                                <input type="text" class="inline-input" id="thromben-uhr" placeholder="Uhr">
+                                <span>Uhr</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="schläuche-fibrin" data-ecmo="Schläuche ohne Fibrinbeläge">
+                                <label for="schläuche-fibrin">Schläuche ohne Fibrinbeläge</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="ess-reizlos" data-ecmo="ESS reizlos">
+                                <label for="ess-reizlos">ESS reizlos</label>
+                            </div>
+                            <div>
+                                <input type="text" class="inline-input" id="eks" placeholder="Anzahl">
+                                <span>x EKs (Kreuzprobe bis</span>
+                                <input type="text" class="inline-input" id="kreuzprobe-datum" placeholder="Datum">
+                                <span>)</span>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="notfallequipment" data-ecmo="Notfallequipment vollständig">
+                                <label for="notfallequipment">Notfallequipment vollständig</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="hämolyse-nw" data-ecmo="Hämolyseparameter nw">
+                                <label for="hämolyse-nw">Hämolyseparameter nw</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="thoraxdrainage" data-category="cor-pulmo" data-value="Thoraxdrainage">
+                        <label for="thoraxdrainage">Thoraxdrainage</label>
+                    </div>
+                    <div class="nested-options" id="thorax-details" style="display: none;">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fistelt-nicht" data-thorax="fistelt nicht">
+                            <label for="fistelt-nicht">Fistelt nicht</label>
+                        </div>
+                        <div>
+                            <label>Fistelvolumen:</label>
+                            <input type="text" class="inline-input" id="fistelvolumen" placeholder="ml">
+                            <span>ml</span>
+                        </div>
+                        <div>
+                            <label>Fördert:</label>
+                            <select class="inline-input" id="fördert-art">
+                                <option value="">Auswahl</option>
+                                <option value="serös">serös</option>
+                                <option value="blutig">blutig</option>
+                                <option value="nicht">nicht</option>
+                            </select>
+                            <span>ca.</span>
+                            <input type="text" class="inline-input" id="fördert-menge" placeholder="ml">
+                            <span>ml</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <span class="option-label">Untersuchung Lunge:</span>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="vag-bds" data-category="cor-pulmo" data-value="vAG bds.">
+                            <label for="vag-bds">vAG bds.</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="keine-spastik" data-category="cor-pulmo" data-value="keine Spastik">
+                            <label for="keine-spastik">Keine Spastik</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="rechts-abgeschwächt" data-category="cor-pulmo" data-value="rechts abgeschwächtes AG">
+                            <label for="rechts-abgeschwächt">Rechts abgeschwächtes AG</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="links-abgeschwächt" data-category="cor-pulmo" data-value="links abgeschwächtes AG">
+                            <label for="links-abgeschwächt">Links abgeschwächtes AG</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <span class="option-label">Beatmung:</span>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="suff-gat-sa" data-category="cor-pulmo" data-value="Suff. GAT unter SA">
+                            <label for="suff-gat-sa">Suff. GAT unter SA bei RL oder</label>
+                            <input type="text" class="inline-input" id="o2-liter" placeholder="l/min">
+                            <span>l/min O2 über NB/Maske</span>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="suff-gat-bipap" data-category="cor-pulmo" data-value="Suff. GAT unter BiPAP">
+                            <label for="suff-gat-bipap">Suff. GAT unter BiPAP</label>
+                        </div>
+                    </div>
+                    <div class="nested-options" id="bipap-details" style="display: none;">
+                        <div>
+                            <label>FiO2:</label>
+                            <input type="text" class="inline-input" id="fio2" placeholder="%">
+                            <span>%</span>
+                            
+                            <label style="margin-left: 15px;">PEEP:</label>
+                            <input type="text" class="inline-input" id="peep" placeholder="Wert">
+                            
+                            <label style="margin-left: 15px;">OI:</label>
+                            <input type="text" class="inline-input" id="oi" placeholder="Wert">
+                        </div>
+                    </div>
+                    <div>
+                        <label>WS:</label>
+                        <input type="text" class="inline-input" id="ws" placeholder="Wert">
+                    </div>
+                    <div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hyperkapnisch" data-category="cor-pulmo" data-value="hyperkapnisch">
+                            <label for="hyperkapnisch">Hyperkapnisch</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="hypokapnisch" data-category="cor-pulmo" data-value="hypokapnisch">
+                            <label for="hypokapnisch">Hypokapnisch</label>
+                        </div>
+                        <input type="text" class="text-input" id="kapnie-freitext" placeholder="Freitext zu Kapnie...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Abdomen Kategorie -->
+            <div class="category">
+                <div class="category-title">3. Abdomen</div>
+                
+                <div class="option-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="weich" data-category="abdomen" data-value="weich">
+                            <label for="weich">Weich</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="gebläht" data-category="abdomen" data-value="gebläht">
+                            <label for="gebläht">Gebläht</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="peristaltik-ubiquitär" data-category="abdomen" data-value="Peristaltik ubiquitär">
+                            <label for="peristaltik-ubiquitär">Peristaltik ubiquitär</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="keine-aws" data-category="abdomen" data-value="keine AWS">
+                            <label for="keine-aws">Keine AWS</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="kein-ds" data-category="abdomen" data-value="kein DS">
+                            <label for="kein-ds">Kein DS</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="keine-resistenzen" data-category="abdomen" data-value="keine Resistenzen">
+                            <label for="keine-resistenzen">Keine Resistenzen</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div>
+                        <label>SG:</label>
+                        <input type="text" class="inline-input" id="sg" placeholder="Wert">
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pe" data-category="abdomen" data-value="pE">
+                            <label for="pe">pE</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="ee" data-category="abdomen" data-value="eE">
+                            <label for="ee">eE</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="vk" data-category="abdomen" data-value="VK">
+                            <label for="vk">VK</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="breiige-kost" data-category="abdomen" data-value="breiige Kost">
+                            <label for="breiige-kost">Breiige Kost</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="nüchtern" data-category="abdomen" data-value="nüchtern">
+                            <label for="nüchtern">Nüchtern</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="drainagen" data-category="abdomen" data-value="Drainagen">
+                        <label for="drainagen">Drainagen</label>
+                    </div>
+                    <div class="nested-options" id="drainagen-details" style="display: none;">
+                        <div>
+                            <label>Fördervolumen:</label>
+                            <input type="text" class="inline-input" id="fördervolumen" placeholder="ml">
+                            <span>ml</span>
+                        </div>
+                        <div style="margin-top: 8px;">
+                            <label>Sekretbeschreibung:</label>
+                            <input type="text" class="text-input" id="sekretbeschreibung" placeholder="Beschreibung des Sekrets...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="abdominal-dressing" data-category="abdomen" data-value="Abdominal Dressing">
+                        <label for="abdominal-dressing">Abdominal Dressing</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nieren und Stoffwechsel Kategorie -->
+            <div class="category">
+                <div class="category-title">4. Nieren und Stoffwechsel</div>
+                
+                <div class="option-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="suff-diurese" data-category="nieren" data-value="suff. Diurese">
+                            <label for="suff-diurese">Suff. Diurese</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="oligurie" data-category="nieren" data-value="Oligurie">
+                            <label for="oligurie">Oligurie</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="anurie" data-category="nieren" data-value="Anurie">
+                            <label for="anurie">Anurie</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="polyurie" data-category="nieren" data-value="Polyurie">
+                            <label for="polyurie">Polyurie</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="urin-klar" data-category="nieren" data-value="Urin klar">
+                            <label for="urin-klar">Urin klar</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="urin-konzentriert" data-category="nieren" data-value="Urin konzentriert">
+                            <label for="urin-konzentriert">Urin konzentriert</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="elyte-rp-nw" data-category="nieren" data-value="Elyte + RP nw">
+                            <label for="elyte-rp-nw">Elyte + RP nw</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="urämisch" data-category="nieren" data-value="urämisch">
+                            <label for="urämisch">Urämisch</label>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px;">
+                        <label>Kalium:</label>
+                        <input type="text" class="inline-input" id="kalium" placeholder="Wert">
+                        
+                        <label style="margin-left: 15px;">Na:</label>
+                        <input type="text" class="inline-input" id="natrium" placeholder="Wert">
+                        
+                        <label style="margin-left: 15px;">Krea:</label>
+                        <input type="text" class="inline-input" id="kreatinin" placeholder="Wert">
+                        
+                        <label style="margin-left: 15px;">HST:</label>
+                        <input type="text" class="inline-input" id="hst" placeholder="Wert">
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="cvvhd" data-category="nieren" data-value="CVVHD">
+                        <label for="cvvhd">CVVHD</label>
+                    </div>
+                    <div class="nested-options" id="cvvhd-details" style="display: none;">
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="cica" data-cvvhd="CiCa">
+                                <label for="cica">CiCa</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="heparin" data-cvvhd="Heparin">
+                                <label for="heparin">Heparin</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div>
+                        <label>Bilanz Vortag:</label>
+                        <input type="text" class="inline-input" id="bilanz-vortag" placeholder="ml">
+                        <span>ml</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Haut/Extremitäten/Infekt Kategorie -->
+            <div class="category">
+                <div class="category-title">5. Haut/Extremitäten/Infekt</div>
+                
+                <div class="option-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pak" data-category="haut" data-value="pAK">
+                            <label for="pak">pAK</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="thak" data-category="haut" data-value="thAK">
+                            <label for="thak">thAK</label>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px;">
+                        <span>mit:</span>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="nmh" data-ak="NMH">
+                                <label for="nmh">NMH</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="ufh" data-ak="UFH">
+                                <label for="ufh">UFH</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="sonstiges-ak" data-ak="Sonstiges">
+                                <label for="sonstiges-ak">Sonstiges</label>
+                                <input type="text" class="inline-input" id="sonstiges-ak-text" placeholder="...">
+                            </div>
+                        </div>
+                        <div style="margin-top: 8px;">
+                            <label>PTT:</label>
+                            <input type="text" class="inline-input" id="ptt" placeholder="Sek">
+                            <span>Sek.</span>
+                            
+                            <label style="margin-left: 15px;">AXA:</label>
+                            <input type="text" class="inline-input" id="axa" placeholder="Wert">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="kein-anhalt-tvt" data-category="haut" data-value="kein Anhalt f. TVT">
+                            <label for="kein-anhalt-tvt">Kein Anhalt f. TVT</label>
+                        </div>
+                    </div>
+                    <div>
+                        <label>Thrombose Freitext:</label>
+                        <input type="text" class="text-input" id="thrombose-freitext" placeholder="Beschreibung...">
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="afebril" data-category="haut" data-value="afebril">
+                            <label for="afebril">Afebril</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="subfebril" data-category="haut" data-value="subfebril">
+                            <label for="subfebril">Subfebril</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fieber" data-category="haut" data-value="Fieber">
+                            <label for="fieber">Fieber</label>
+                            <input type="text" class="inline-input" id="fieber-temp" placeholder="°C">
+                            <span>°C unter ABx</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <span class="option-label">ABx:</span>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="mero" data-abx="Mero">
+                            <label for="mero">Mero</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="vanco" data-abx="Vanco">
+                            <label for="vanco">Vanco</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pip-taz" data-abx="Pip/Taz">
+                            <label for="pip-taz">Pip/Taz</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="caspo" data-abx="Caspo">
+                            <label for="caspo">Caspo</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="clindamycin" data-abx="Clindamycin">
+                            <label for="clindamycin">Clindamycin</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="azithro" data-abx="Azithro">
+                            <label for="azithro">Azithro</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="metronidazol" data-abx="Metronidazol">
+                            <label for="metronidazol">Metronidazol</label>
+                        </div>
+                    </div>
+                    <input type="text" class="text-input" id="abx-freitext" placeholder="Weitere Antibiotika...">
+                </div>
+
+                <div class="option-group">
+                    <div>
+                        <label>CrP:</label>
+                        <input type="text" class="inline-input" id="crp" placeholder="Wert">
+                        
+                        <label style="margin-left: 15px;">Leukos:</label>
+                        <input type="text" class="inline-input" id="leukos" placeholder="Wert">
+                        
+                        <div class="checkbox-item" style="margin-top: 8px;">
+                            <input type="checkbox" id="ips-nw" data-category="haut" data-value="IPs nw">
+                            <label for="ips-nw">IPs nw</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="option-group">
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="uex-warm-schlank" data-category="haut" data-value="UEx warm + schlank">
+                            <label for="uex-warm-schlank">UEx warm + schlank</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="pödeme-prätibial" data-category="haut" data-value="pÖdeme prätibial">
+                            <label for="pödeme-prätibial">pÖdeme prätibial</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="fußpulse-tastbar" data-category="haut" data-value="Fußpulse bds. tastbar">
+                            <label for="fußpulse-tastbar">Fußpulse bds. tastbar</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Output Bereich -->
+        <div class="output-section">
+            <div class="output-title">Dokumentationstext</div>
+            <div id="output" class="output-text">Hier erscheint der generierte Text...</div>
+            <div class="buttons">
+                <button class="btn btn-primary" onclick="generateOutput()">Text generieren</button>
+                <button class="btn btn-secondary" onclick="clearAll()">Alle zurücksetzen</button>
+                <button class="btn btn-success" onclick="copyToClipboard()">In Zwischenablage kopieren</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Event Listeners für automatische Updates
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-generate wenn sich etwas ändert
+            document.addEventListener('change', function(e) {
+                if (e.target.type === 'checkbox' || e.target.type === 'number' || e.target.type === 'text') {
+                    generateOutput();
+                    handleConditionalDisplay(e);
+                }
+            });
+            
+            // Auto-generate bei Text-Input
+            document.addEventListener('input', function(e) {
+                if (e.target.type === 'text') {
+                    generateOutput();
+                }
+            });
+        });
+
+        function handleConditionalDisplay(e) {
+            // ZNS Wach/Sediert Toggle
+            if (e.target.id === 'wach') {
+                document.getElementById('wach-options').style.display = e.target.checked ? 'block' : 'none';
+                if (e.target.checked) {
+                    document.getElementById('sediert').checked = false;
+                    document.getElementById('sediert-options').style.display = 'none';
+                }
+            }
+            if (e.target.id === 'sediert') {
+                document.getElementById('sediert-options').style.display = e.target.checked ? 'block' : 'none';
+                if (e.target.checked) {
+                    document.getElementById('wach').checked = false;
+                    document.getElementById('wach-options').style.display = 'none';
+                }
+            }
+            
+            // ECMO Details
+            if (e.target.id === 'vvecmo') {
+                document.getElementById('vvecmo-details').style.display = e.target.checked ? 'block' : 'none';
+            }
+            
+            // Thoraxdrainage Details
+            if (e.target.id === 'thoraxdrainage') {
+                document.getElementById('thorax-details').style.display = e.target.checked ? 'block' : 'none';
+            }
+            
+            // BiPAP Details
+            if (e.target.id === 'suff-gat-bipap') {
+                document.getElementById('bipap-details').style.display = e.target.checked ? 'block' : 'none';
+            }
+            
+            // Drainagen Details
+            if (e.target.id === 'drainagen') {
+                document.getElementById('drainagen-details').style.display = e.target.checked ? 'block' : 'none';
+            }
+            
+            // CVVHD Details
+            if (e.target.id === 'cvvhd') {
+                document.getElementById('cvvhd-details').style.display = e.target.checked ? 'block' : 'none';
+            }
+        }
+
+        function generateOutput() {
+            const categories = {
+                'ZNS': [],
+                'Cor/Pulmo': [],
+                'Abdomen': [],
+                'Nieren und Stoffwechsel': [],
+                'Haut/Extremitäten/Infekt': []
+            };
+
+            // ZNS - Spezielle Reihenfolge
+            const isWach = document.getElementById('wach').checked;
+            const isSediert = document.getElementById('sediert').checked;
+            
+            if (isWach) {
+                categories['ZNS'].push('wach');
+                
+                // Adäquat oder Freitext
+                if (document.getElementById('adäquat').checked) {
+                    categories['ZNS'].push('adäquat');
+                }
+                const adäquatFreitext = document.getElementById('adäquat-freitext').value.trim();
+                if (adäquatFreitext) {
+                    categories['ZNS'].push(adäquatFreitext);
+                }
+                
+                // Orientierung
+                if (document.getElementById('4fach-orientiert').checked) {
+                    categories['ZNS'].push('4-fach orientiert');
+                }
+                if (document.getElementById('unscharf-orientiert').checked) {
+                    categories['ZNS'].push('unscharf orientiert');
+                }
+                
+                // GCS
+                const gcs = document.getElementById('gcs').value;
+                if (gcs !== '') {
+                    categories['ZNS'].push('GCS ' + gcs);
+                }
+                
+                // Schmerzzufrieden
+                if (document.getElementById('schmerzzufrieden').checked) {
+                    categories['ZNS'].push('schmerzzufrieden');
+                }
+                
+                // kein fnD
+                if (document.getElementById('kein-anhalt-fnd').checked) {
+                    categories['ZNS'].push('kein Anhalt f. fnD');
+                }
+            }
+            
+            if (isSediert) {
+                // RASS
+                const rass = document.getElementById('rass').value;
+                if (rass !== '') {
+                    categories['ZNS'].push('RASS ' + rass);
+                }
+                
+                // Sediert mit
+                const sedationMeds = [];
+                ['sufentanil', 'propofol', 'lormetazepam', 'clonidin', 'esketamin'].forEach(med => {
+                    if (document.getElementById(med).checked) {
+                        const medName = document.getElementById(med).getAttribute('data-sedation');
+                        sedationMeds.push(medName);
+                    }
+                });
+                
+                const sediertText = document.getElementById('sediert-text').value.trim();
+                if (sediertText) {
+                    sedationMeds.push(sediertText);
+                }
+                
+                if (sedationMeds.length > 0) {
+                    categories['ZNS'].push('sediert mit ' + sedationMeds.join('/'));
+                } else {
+                    categories['ZNS'].push('sediert');
+                }
+                
+                // Befolgt Aufforderungen
+                if (document.getElementById('befolgt-aufforderungen').checked) {
+                    categories['ZNS'].push('befolgt Aufforderungen');
+                }
+                
+                // PERRL
+                ['perrl-mw', 'perrl-weit', 'perrl-eng', 'perrl-fixiert', 'perrl-fixiert-nicht'].forEach(id => {
+                    if (document.getElementById(id).checked) {
+                        categories['ZNS'].push(document.getElementById(id).getAttribute('data-value'));
+                    }
+                });
+                
+                // kein fnD
+                if (document.getElementById('kein-anhalt-fnd').checked) {
+                    categories['ZNS'].push('kein Anhalt f. fnD');
+                }
+            }
+            
+            // Bewegt 4/4
+            if (document.getElementById('bewegt-4-4').checked) {
+                categories['ZNS'].push('bewegt 4/4');
+            }
+            
+            // Sonstiges
+            const znsSonstiges = document.getElementById('zns-sonstiges').value.trim();
+            if (znsSonstiges) {
+                categories['ZNS'].push(znsSonstiges);
+            }
+
+            // Cor/Pulmo
+            // Untersuchung Herz
+            ['ht-rr', 'systolikum', 'diastolikum', 'arrhythmisch-herz'].forEach(id => {
+                if (document.getElementById(id).checked) {
+                    categories['Cor/Pulmo'].push(document.getElementById(id).getAttribute('data-value'));
+                }
+            });
+            
+            // Rhythmus
+            ['nfsr', 'tcsr', 'bcsr', 'nfvhf', 'tcvhf', 'bcvhf', 'sm-rhythmus'].forEach(id => {
+                if (document.getElementById(id).checked) {
+                    categories['Cor/Pulmo'].push(document.getElementById(id).getAttribute('data-value'));
+                }
+            });
+            
+            const rhythmusFreitext = document.getElementById('rhythmus-freitext').value.trim();
+            if (rhythmusFreitext) {
+                categories['Cor/Pulmo'].push(rhythmusFreitext);
+            }
+            
+            // RR
+            ['rr-nt', 'rr-hypoton', 'rr-hyperton'].forEach(id => {
+                if (document.getElementById(id).checked) {
+                    categories['Cor/Pulmo'].push(document.getElementById(id).getAttribute('data-value'));
+                }
+            });
+            
+            // Katecholamine
+            const katecholamine = [];
+            if (document.getElementById('na').checked) {
+                const rate = document.getElementById('na-rate').value.trim();
+                katecholamine.push('NA' + (rate ? ' ' + rate : ''));
+            }
+            if (document.getElementById('vp').checked) {
+                const rate = document.getElementById('vp-rate').value.trim();
+                katecholamine.push('VP' + (rate ? ' ' + rate : ''));
+            }
+            if (document.getElementById('adrenalin').checked) {
+                const rate = document.getElementById('adrenalin-rate').value.trim();
+                katecholamine.push('Adrenalin' + (rate ? ' ' + rate : ''));
+            }
+            if (katecholamine.length > 0) {
+                categories['Cor/Pulmo'].push(katecholamine.join(', '));
+            }
+            
+            // Hb, Lac
+            const hb = document.getElementById('hb').value.trim();
+            if (hb) {
+                categories['Cor/Pulmo'].push('Hb ' + hb);
+            }
+            const lac = document.getElementById('lac').value.trim();
+            if (lac) {
+                categories['Cor/Pulmo'].push('Lac ' + lac);
+            }
+            
+            // vvECMO
+            if (document.getElementById('vvecmo').checked) {
+                const ecmoDetails = [];
+                const gf = document.getElementById('gf').value.trim();
+                const bf = document.getElementById('bf').value.trim();
+                const rpm = document.getElementById('rpm').value.trim();
+                
+                if (gf) ecmoDetails.push('GF ' + gf + ' l/min');
+                if (bf && rpm) ecmoDetails.push('BF ' + bf + ' l/min bei ' + rpm + ' rpm');
+                
+                const pdelta = document.getElementById('pdelta').value.trim();
+                if (pdelta) ecmoDetails.push('Pdelta ' + pdelta);
+                
+                const svo2 = document.getElementById('svo2').value.trim();
+                if (svo2) ecmoDetails.push('SvO2 ' + svo2 + '%');
+                
+                ['farbumschlag-pos', 'schläuche-fibrin', 'ess-reizlos', 'notfallequipment', 'hämolyse-nw'].forEach(id => {
+                    if (document.getElementById(id).checked) {
+                        ecmoDetails.push(document.getElementById(id).getAttribute('data-ecmo'));
+                    }
+                });
+                
+                const thrombenUhr = document.getElementById('thromben-uhr').value.trim();
+                if (thrombenUhr) {
+                    ecmoDetails.push('konstante Thromben bei ' + thrombenUhr + ' Uhr');
+                }
+                
+                const eks = document.getElementById('eks').value.trim();
+                const kreuzprobe = document.getElementById('kreuzprobe-datum').value.trim();
+                if (eks) {
+                    ecmoDetails.push(eks + 'x EKs' + (kreuzprobe ? ' (Kreuzprobe bis ' + kreuzprobe + ')' : ''));
+                }
+                
+                if (ecmoDetails.length > 0) {
+                    categories['Cor/Pulmo'].push('vvECMO: ' + ecmoDetails.join(', '));
+                }
+            }
+            
+            // Thoraxdrainage
+            if (document.getElementById('thoraxdrainage').checked) {
+                const thoraxDetails = [];
+                
+                if (document.getElementById('fistelt-nicht').checked) {
+                    thoraxDetails.push('fistelt nicht');
+                }
+                
+                const fistelvolumen = document.getElementById('fistelvolumen').value.trim();
+                if (fistelvolumen) {
+                    thoraxDetails.push('Fistelvolumen ' + fistelvolumen + ' ml');
+                }
+                
+                const fördertArt = document.getElementById('fördert-art').value;
+                const fördertMenge = document.getElementById('fördert-menge').value.trim();
+                if (fördertArt && fördertMenge) {
+                    thoraxDetails.push('fördert ' + fördertArt + ' ca. ' + fördertMenge + ' ml');
+                }
+                
+                if (thoraxDetails.length > 0) {
+                    categories['Cor/Pulmo'].push('Thoraxdrainage: ' + thoraxDetails.join(', '));
+                }
+            }
+            
+            // Untersuchung Lunge
+            ['vag-bds', 'keine-spastik', 'rechts-abgeschwächt', 'links-abgeschwächt'].forEach(id => {
+                if (document.getElementById(id).checked) {
+                    categories['Cor/Pulmo'].push(document.getElementById(id).getAttribute('data-value'));
+                }
+            });
+            
+            //
